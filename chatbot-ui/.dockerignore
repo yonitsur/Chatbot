@@ -1,0 +1,10 @@
+
+*.pyc
+__pycache__/
+*.egg-info/
+
+.git/
+.gitignore
+
+node_modules/
+

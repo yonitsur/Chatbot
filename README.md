@@ -1,6 +1,6 @@
 # Startup Knowledge Chatbot API
 
-This FastAPI application provides a chatbot interface specialized in answering questions about startups, leveraging Retrieval-Augmented Generation (RAG) with a Qdrant vector database and OpenAI's language models.
+This FastAPI application provides a chatbot interface specialized in answering questions about startups, leveraging Retrieval-Augmented Generation (RAG) with a Qdrant vector database and OpenAI's language models. It also includes a React-based UI for interacting with the chatbot.
 
 ## Table of Contents
 
@@ -22,7 +22,9 @@ This FastAPI application provides a chatbot interface specialized in answering q
     -   [6. Clearing the Database (Testing Only) (`/clear_db_testing_only`)](#6-clearing-the-database-testing-only-clear_db_testing_only)
 -   [Configuration (config.py & .env)](#configuration-configpy--env)
 -   [Testing](#testing)
--   [UI React App (TBD)](#ui-react-app)
+-   [UI React App](#ui-react-app)
+    -   [Features](#ui-features)
+    -   [Running the UI](#running-the-ui)
 -   [Technical Deep Dive: LLM and RAG Logic](#technical-deep-dive-llm-and-rag-logic)
 
 
@@ -40,12 +42,13 @@ This FastAPI application provides a chatbot interface specialized in answering q
 * **Message Skipping:** Handles rapid consecutive user messages gracefully by skipping processing for older, outdated queries.
 * **Configurable:** Settings managed via environment variables (`.env` file).
 * **Database Storage:** Persists conversation history in a SQLite database (configurable).
-* **UI Integration:** TBD
+* **UI Integration:** Includes a React application for a user-friendly chat interface.
 
 ## Prerequisites
 
 * Ensure [Docker](https://docs.docker.com/get-docker/) is installed and running (if using Docker Compose).
 * Ensure [Python 3.10+](https://www.python.org/downloads/) is installed (if using manual setup).
+* Ensure [Node.js](https://nodejs.org/) is installed (if running the UI manually).
 * An [OpenAI API Key](https://platform.openai.com/api-keys).
 
 ## Installation and Setup
@@ -345,6 +348,7 @@ Key settings are managed via environment variables, loaded using python-dotenv f
 * `REJECTION_MESSAGE`, `NO_HISTORY_SUMMARY_MESSAGE`: Customizable chatbot responses.
 * `UVICORN_*`: Server host, port, and reload settings.
 * `LOG_LEVEL`, `LOG_FORMAT`: Configure application logging.
+* `UI_URL`: URL for the React UI.
 
 ### Testing
 * Unit tests are provided in the `tests` directory.
@@ -366,7 +370,36 @@ The tests cover:
 * Database clearing endpoint functionality.
 
 ## UI React App
- TBD
+The repository includes a React application located in the *chatbot-ui* directory, providing a user-friendly interface to interact with the chatbot API.
+
+### Features
+
+* **User Login:** Allows users to identify themselves, enabling session management.
+* **New Chat Creation:** Starts a new conversation session.
+* **Session History:** Displays a list of recent chat sessions for the user.
+* **Session Selection:** Allows users to select and view the history of a specific session.
+* **Chat Window:** Displays the conversation between the user and the chatbot.
+* **Input Field:** Provides a text input for the user to send messages.
+* **Message Display:** Shows user and bot messages, including error messages.
+* **Loading Indicators:** Displays loading states while fetching data or sending messages.
+
+### Running the UI
+1.  **Navigate to the UI Directory:**
+    ```bash
+    cd chatbot-ui
+    ```
+2.  **Install Dependencies:**
+    ```bash
+    npm install
+    ```
+3.  **Start the React Application:**
+    ```bash
+    npm start
+    ```
+4.  **Access the UI:**
+    * Open your web browser and go to [http://localhost:3000](http://localhost:3000).
+    
+* Important: The UI is configured to connect to the backend API using the `REACT_APP_BACKEND_URL` environment variable. When running in Docker, this is set in the `docker-compose.yml` file. When running manually, ensure this environment variable is set or that the `backendUrl` in `App.js` is correctly configured (default is `http://localhost:8000`).
 
 
 ## Technical Deep Dive: LLM and RAG Logic

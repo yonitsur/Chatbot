@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   app:
     build:
@@ -11,29 +9,53 @@ services:
     environment:
       - QDRANT_URL=http://qdrant:${QDRANT_PORT}
       - PYTHONUNBUFFERED=1
+    network_mode: host
+    ipc: host
     ports:
       - ${UVICORN_PORT}:${UVICORN_PORT}
     volumes:
       - conversation_data:/app/database
-    networks:
-      - chatbot-net
+#    networks:
+#      - chatbot-net
     depends_on:
       - qdrant
+
+  ui:
+    build:
+      context: ./chatbot-ui
+      dockerfile: Dockerfile
+    container_name: chatbot-ui
+    network_mode: host
+    env_file:
+      - .env
+    ipc: host
+    ports:
+      - ${UI_PORT}:${UI_PORT}
+    environment:
+      - REACT_APP_BACKEND_URL={$UI_URL}
+#    networks:
+#      - chatbot-net
+    depends_on:
+      - app
 
   qdrant:
     image: qdrant/qdrant:latest
     container_name: qdrant-db
+    network_mode: host
+    ipc: host
+    env_file:
+      - .env
     ports:
       - ${QDRANT_PORT}:${QDRANT_PORT}
       - ${QDRANT_PORT_SSL}:${QDRANT_PORT_SSL}
     volumes:
       - qdrant_data:/qdrant/storage
-    networks:
-      - chatbot-net
+#    networks:
+#      - chatbot-net
 
-networks:
-  chatbot-net:
-    driver: bridge
+#networks:
+#  chatbot-net:
+#    driver: bridge
 
 volumes:
   qdrant_data:

@@ -25,3 +25,5 @@ htmlcov/
 
 .env
 sample.env
+
+/chatbot-ui
