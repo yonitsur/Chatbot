@@ -1,0 +1,27 @@
+venv/
+.venv/
+
+*.pyc
+__pycache__/
+*.egg-info/
+
+.git/
+.gitignore
+
+qdrant_storage/
+database/ # The directory we are mounting the volume to
+
+.idea/
+.vscode/
+
+.DS_Store
+Thumbs.db
+
+tests/
+pytest.ini
+.pytest_cache/
+htmlcov/
+.coverage*
+
+.env
+sample.env

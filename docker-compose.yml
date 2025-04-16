@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: chatbot-app
+    env_file:
+      - .env
+    environment:
+      - QDRANT_URL=http://qdrant:${QDRANT_PORT}
+      - PYTHONUNBUFFERED=1
+    ports:
+      - ${UVICORN_PORT}:${UVICORN_PORT}
+    volumes:
+      - conversation_data:/app/database
+    networks:
+      - chatbot-net
+    depends_on:
+      - qdrant
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: qdrant-db
+    ports:
+      - ${QDRANT_PORT}:${QDRANT_PORT}
+      - ${QDRANT_PORT_SSL}:${QDRANT_PORT_SSL}
+    volumes:
+      - qdrant_data:/qdrant/storage
+    networks:
+      - chatbot-net
+
+networks:
+  chatbot-net:
+    driver: bridge
+
+volumes:
+  qdrant_data:
+  conversation_data:
