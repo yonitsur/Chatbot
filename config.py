@@ -33,7 +33,7 @@ DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///database/conversation.db")
 
 DEFAULT_USER_ID = os.getenv("DEFAULT_USER_ID", "default_user")
 DEFAULT_SESSION_ID = os.getenv("DEFAULT_SESSION_ID", "default_session")
-MESSAGE_STATUS_CHECK_DELAY_SECONDS = float(os.getenv("MESSAGE_STATUS_CHECK_DELAY_SECONDS", "0.3"))
+MESSAGE_STATUS_CHECK_DELAY_SECONDS = float(os.getenv("MESSAGE_STATUS_CHECK_DELAY_SECONDS", "1.0"))
 QUERY_REWRITER_MIN_LENGTH = int(os.getenv("QUERY_REWRITER_MIN_LENGTH", "3"))
 REJECTION_MESSAGE = os.getenv("REJECTION_MESSAGE",
                               "My expertise is limited to startups and venture capital. Please ask a relevant question.")

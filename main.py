@@ -22,6 +22,7 @@ from config import (
     UVICORN_RELOAD,
     DEFAULT_USER_ID,
     DEFAULT_SESSION_ID,
+    MESSAGE_STATUS_CHECK_DELAY_SECONDS
 
 )
 from fastapi.middleware.cors import CORSMiddleware
@@ -157,7 +158,7 @@ async def query(
             lambda: mark_older_pending_as_skipped(db, user_id, session_id, user_message_id)
         )
 
-        await asyncio.sleep(1)
+        await asyncio.sleep(MESSAGE_STATUS_CHECK_DELAY_SECONDS)
 
         current_status = await asyncio.to_thread(
             lambda: get_message_status(db, user_message_id)
