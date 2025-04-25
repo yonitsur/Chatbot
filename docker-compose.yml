@@ -1,4 +1,17 @@
+version: '3.9'
+
 services:
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: chatbot-qdrant
+    ports:
+      - ${QDRANT_PORT:-6333}:${QDRANT_PORT:-6333}
+      - ${QDRANT_PORT_SSL:-6334}:${QDRANT_PORT_SSL:-6334}
+    volumes:
+      - ./qdrant:/qdrant/storage
+    networks:
+      - chatbot-net
+
   app:
     build:
       context: .
@@ -7,56 +20,31 @@ services:
     env_file:
       - .env
     environment:
-      - QDRANT_URL=http://qdrant:${QDRANT_PORT}
+      - QDRANT_URL=http://qdrant:${QDRANT_PORT:-6333}
       - PYTHONUNBUFFERED=1
-    network_mode: host
-    ipc: host
-    ports:
-      - ${UVICORN_PORT}:${UVICORN_PORT}
     volumes:
-      - conversation_data:/app/database
-#    networks:
-#      - chatbot-net
+      - ./database:/app/database
+    ports:
+      - ${UVICORN_PORT:-8000}:${UVICORN_PORT:-8000}
     depends_on:
       - qdrant
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - chatbot-net
 
   ui:
     build:
       context: ./chatbot-ui
       dockerfile: Dockerfile
     container_name: chatbot-ui
-    network_mode: host
-    env_file:
-      - .env
-    ipc: host
     ports:
-      - ${UI_PORT}:${UI_PORT}
-    environment:
-      - REACT_APP_BACKEND_URL={$UI_URL}
-#    networks:
-#      - chatbot-net
+      - ${UI_PORT:-3000}:80
     depends_on:
       - app
+    networks:
+      - chatbot-net
 
-  qdrant:
-    image: qdrant/qdrant:latest
-    container_name: qdrant-db
-    network_mode: host
-    ipc: host
-    env_file:
-      - .env
-    ports:
-      - ${QDRANT_PORT}:${QDRANT_PORT}
-      - ${QDRANT_PORT_SSL}:${QDRANT_PORT_SSL}
-    volumes:
-      - qdrant_data:/qdrant/storage
-#    networks:
-#      - chatbot-net
-
-#networks:
-#  chatbot-net:
-#    driver: bridge
-
-volumes:
-  qdrant_data:
-  conversation_data:
+networks:
+  chatbot-net:
+    driver: bridge

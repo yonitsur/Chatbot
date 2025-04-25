@@ -29,7 +29,7 @@ QDRANT_COLLECTION_NAME = os.getenv("QDRANT_COLLECTION_NAME", "startups")
 QDRANT_URL = os.getenv("QDRANT_URL", "http://localhost:6333")
 QDRANT_TOP_K = int(os.getenv("QDRANT_TOP_K", "7"))
 
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///conversation.db")
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///database/conversation.db")
 
 DEFAULT_USER_ID = os.getenv("DEFAULT_USER_ID", "default_user")
 DEFAULT_SESSION_ID = os.getenv("DEFAULT_SESSION_ID", "default_session")

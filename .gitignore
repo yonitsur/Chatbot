@@ -19,6 +19,8 @@ htmlcov/
 
 .env
 
-qdrant/
+qdrant/aliases/
+qdrant/collections/
+qdrant/raft_state.json
 
 *.db

@@ -8,8 +8,8 @@ __pycache__/
 .git/
 .gitignore
 
-qdrant_storage/
-database/ # The directory we are mounting the volume to
+qdrant/
+database/
 
 .idea/
 .vscode/
