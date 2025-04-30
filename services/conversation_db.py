@@ -1,8 +1,7 @@
 import datetime
 import logging
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, Enum as SQLEnum, desc, asc, Index, func
-from sqlalchemy.orm import sessionmaker, scoped_session, Session
-from sqlalchemy.orm import declarative_base
+from sqlalchemy.orm import sessionmaker, scoped_session, Session, declarative_base
 import enum
 import threading
 
@@ -141,7 +140,7 @@ def get_messages_for_session(db: Session, user_id: str, session_id: str, limit: 
         messages = db.query(Conversation).filter(
             Conversation.user_id == user_id,
             Conversation.session_id == session_id,
-            Conversation.status.in_([Status.processed, Status.error]),
+            Conversation.status.in_([Status.processed, Status.error, Status.rejected]),
             Conversation.role.in_(["user", "assistant"])
         ).order_by(asc(Conversation.id)).limit(limit).all()
 

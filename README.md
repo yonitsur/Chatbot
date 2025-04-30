@@ -72,20 +72,15 @@ cd startups-assignment-il-main
 ### step 3:  
 ### *Option 1*: Using Docker Compose (Recommended)
 
-1.  **Build and Run the Docker Containers (in the background):**
+1.  **Build and Run the Docker Containers:**
     * Ensure you have Docker and Docker Compose installed.
     * From the project's root folder, run:
     ```bash
-    docker compose up -d
+    docker compose up 
     ```
-    *(This will build the FastAPI application and Qdrant containers.)*
+    *This will build the FastAPI application, Qdrant containers, and the React UI.*
 
-
-2. Run Qdrant Initialization Script (needed only once):
-    ```bash
-    docker exec chatbot-app python -m scripts.init_collection
-    ```
-    *(This will create the 'startups' collection and upload the initial data vectors.)*
+    *It will also create the 'startups' collection and upload the initial data vectors.*
 
 
 ### *Option 2*: Manual Setup
