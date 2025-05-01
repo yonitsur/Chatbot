@@ -204,7 +204,7 @@ This endpoint provides a summary of the recent conversation history.
 #### Example Usage with `curl`:
 ```bash
 curl -X 'GET' \
-  'http://localhost:8000/summarize?user_id=vc_analyst_01&session_id=london_ai_research_20250414' \
+  'http://localhost:8000/summarize?user-id=vc_analyst_01&session-id=london_ai_research_20250414' \
   -H 'accept: application/json'
 ```
 * **Response (JSON):**
@@ -315,7 +315,7 @@ This endpoint clears the conversation database. **Use with caution!**
 * **Example Usage with `curl`:**
 ```bash
 curl -X 'POST' \
-    'http://localhost:8000/clear_db_testing_only?user_id=vc_analyst_01&session_id=london_ai_research_20250414&clear_all=true' \
+    'http://localhost:8000/clear_db_testing_only?user-id=vc_analyst_01&session-id=london_ai_research_20250414&clear_all=true' \
     -H 'accept: application/json'
 ```
 * **Response (JSON):**
