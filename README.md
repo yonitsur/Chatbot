@@ -56,8 +56,8 @@ This FastAPI application provides a chatbot interface specialized in answering q
 ### step 1:
 ####  Clone the Repository:
 ```bash
-git clone https://github.com/yonitsur/startups-assignment-il-main.git
-cd startups-assignment-il-main
+git clone https://github.com/yonitsur/Chatbot.git
+cd Chatbot
 ```
 ### step 2:
 #### Configure Environment Variables:
